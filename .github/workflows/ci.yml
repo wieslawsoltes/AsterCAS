@@ -1,0 +1,102 @@
+name: Validate, build and publish
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  validate:
+    name: Kernel and browser validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run exact and numerical kernel tests
+        run: |
+          mkdir -p test-results
+          npm test | tee test-results/kernel.tap
+      - name: Build standalone application
+        run: npm run build
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser test tools
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Run worksheet integration tests
+        run: python tests/browser_integration.py
+      - name: Test both builds on a real localhost origin
+        run: python tests/browser_live.py
+      - name: Upload tested standalone artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aster-dist
+          path: dist/index.html
+          if-no-files-found: error
+      - name: Upload test reports and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aster-validation
+          path: |
+            test-results/
+            docs/browser-test-results.json
+            docs/*.png
+
+  publish:
+    name: Publish and verify GitHub Pages
+    needs: validate
+    if: github.repository == 'wieslawsoltes/AsterCAS' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pages: write
+    concurrency:
+      group: aster-pages-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: aster-dist
+          path: dist
+      - name: Publish tested build and verify public HTML checksum
+        id: publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/publish_pages.py
+      - uses: actions/setup-python@v5
+        if: steps.publish.outputs.published == 'true'
+        with:
+          python-version: '3.12'
+      - name: Install public-site browser test tools
+        if: steps.publish.outputs.published == 'true'
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Test the published HTTPS application
+        if: steps.publish.outputs.published == 'true'
+        env:
+          SITE_URL: ${{ steps.publish.outputs.url }}
+        run: python tests/browser_published.py --url "$SITE_URL" --commit "$GITHUB_SHA"
+      - name: Upload deployment evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aster-publication
+          path: test-results/

@@ -6,17 +6,17 @@ Source: https://github.com/wieslawsoltes/AsterCAS/tree/main
 
 Workflow: https://github.com/wieslawsoltes/AsterCAS/actions/workflows/ci.yml
 
-## Branches and publication
+## Validation and publication
 
-`main` contains the complete editable source, tests, documentation and an initial standalone build. The `gh-pages` branch contains the generated publication. Pages is configured to serve `gh-pages` at `/ (root)`. `.nojekyll` disables Jekyll processing.
+`main` contains the complete editable source, tests, documentation and an initial standalone build. On each push to `main`, CI runs the kernel suite, builds `dist/index.html`, executes the worksheet integration suite, and validates both source-module and standalone builds on an actual localhost origin. Only the tested artifact proceeds to publication. Pull requests run validation without production publication.
 
-On a push to `main`, CI runs the kernel suite, builds `dist/index.html`, executes the worksheet integration suite, and validates both source-module and standalone builds on an actual localhost origin. Only the tested artifact proceeds to publication. Pull requests run validation without production credentials or publication.
+Publication uses GitHub's official `configure-pages`, `upload-pages-artifact`, and `deploy-pages` actions. The repository's Pages publishing source should be **GitHub Actions**. The `github-pages` deployment environment links to the published application. No generated branch is required for subsequent deployments; the initial `gh-pages` branch is only a bootstrap snapshot and is not maintained by this workflow.
 
-The publication job updates `gh-pages` without force-pushing, requests a Pages build explicitly (workflow-token pushes alone do not trigger Pages), checks that the expected deployment commit finishes building, then verifies the public HTML SHA-256 against the tested artifact. It also checks the `source_commit` in `version.json`.
+Before uploading, the job writes `version.json` with the source commit and standalone HTML SHA-256. After GitHub reports a successful deployment, the job verifies the live HTTP response against the tested artifact, then opens the actual HTTPS site in Chromium. That browser check covers worker evaluation, 2D/3D geometry, persistent editing, a native document download, and absence of unhandled JavaScript errors.
 
-The job finally opens the real HTTPS site in Chromium and verifies worker evaluation, 2D/3D geometry, persistent editing, a native document download, and absence of unhandled JavaScript errors. Test reports and screenshots are retained as workflow artifacts. The browser reports its actual rendering backend; passing a fallback-renderer test does not claim hardware WebGPU validation.
+The browser reports its actual rendering backend; passing a fallback-renderer test does not claim hardware WebGPU validation. Test reports and screenshots are retained as workflow artifacts.
 
-Production publication is serialized, and superseded source commits are skipped before publishing. Deployment uses only the job's short-lived `GITHUB_TOKEN` with repository `contents: write` and `pages: write`. No personal access token or external hosting service is required.
+Production publication is serialized, and superseded source commits are skipped. The deployment job uses only its short-lived `GITHUB_TOKEN` and OIDC identity with `contents: read`, `pages: write`, and `id-token: write`. No personal access token or external hosting service is required.
 
 ## Local development
 
@@ -26,10 +26,8 @@ npm run build
 python3 -m http.server 8765
 ```
 
-Open http://localhost:8765 for the modular application or http://localhost:8765/dist/ for the standalone build. After editing, push to `main`. The version of `dist/index.html` tracked in the source tree is a convenience snapshot; the published version is always rebuilt from the current validated source.
+Open http://localhost:8765 for the modular application or http://localhost:8765/dist/ for the standalone build. After editing, push to `main`. The version of `dist/index.html` tracked in the source tree is a convenience snapshot; publication always uses a fresh build of validated source.
 
 ## Diagnostics
 
-Check the **Validate, build and publish** workflow and the separate managed **pages build and deployment** run. Artifacts include `kernel.tap`, browser reports and screenshots, `pages-publish.json`, and `published-browser-results.json`. The public `/version.json` maps the served application to its source commit and HTML digest.
-
-A repository administrator can inspect **Settings → Pages** to confirm **Deploy from a branch → gh-pages → / (root)**. Changing that setting to another branch or to a custom Actions source requires adapting the deployment script accordingly.
+Check the **Validate, build and publish** workflow. Its configuration job records the actual Pages build type and publishing source without exposing credentials. Artifacts include `kernel.tap`, browser reports and screenshots, `pages-publish.json`, and `published-browser-results.json`. The public `/version.json` identifies the served source commit and HTML digest.

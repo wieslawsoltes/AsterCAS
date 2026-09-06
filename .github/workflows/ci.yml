@@ -15,6 +15,19 @@ defaults:
     shell: bash
 
 jobs:
+  pages-config:
+    name: Read Pages configuration
+    if: github.repository == 'wieslawsoltes/AsterCAS' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      pages: read
+    steps:
+      - name: Inspect configured publishing source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api "repos/$GITHUB_REPOSITORY/pages" --jq '{build_type, source, html_url}'
+
   validate:
     name: Kernel and browser validation
     runs-on: ubuntu-latest
@@ -59,40 +72,78 @@ jobs:
 
   publish:
     name: Publish and verify GitHub Pages
-    needs: validate
+    needs: [validate, pages-config]
     if: github.repository == 'wieslawsoltes/AsterCAS' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
-      contents: write
+      contents: read
       pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     concurrency:
       group: aster-pages-production
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
+      - name: Skip superseded source commits
+        id: current
+        run: |
+          HEAD_SHA="$(git ls-remote origin refs/heads/main | cut -f1)"
+          if [ "$HEAD_SHA" = "$GITHUB_SHA" ]; then
+            echo 'ready=true' >> "$GITHUB_OUTPUT"
+          else
+            echo "Skipping superseded source $GITHUB_SHA; main is $HEAD_SHA."
+            echo 'ready=false' >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/download-artifact@v4
+        if: steps.current.outputs.ready == 'true'
         with:
           name: aster-dist
           path: dist
-      - name: Publish tested build and verify public HTML checksum
-        id: publish
+      - name: Record the tested source and artifact digest
+        if: steps.current.outputs.ready == 'true'
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          dist = Path('dist')
+          version = {'name': 'Aster CAS', 'version': json.loads(Path('package.json').read_text())['version'],
+                     'source_commit': os.environ['GITHUB_SHA'], 'repository': os.environ['GITHUB_REPOSITORY'],
+                     'html_sha256': hashlib.sha256((dist / 'index.html').read_bytes()).hexdigest()}
+          (dist / 'version.json').write_text(json.dumps(version, indent=2) + '\n')
+          (dist / '.nojekyll').write_text('')
+          PY
+      - uses: actions/configure-pages@v5
+        if: steps.current.outputs.ready == 'true'
+      - uses: actions/upload-pages-artifact@v4
+        if: steps.current.outputs.ready == 'true'
+        with:
+          path: dist
+      - name: Deploy GitHub Pages
+        id: deployment
+        if: steps.current.outputs.ready == 'true'
+        uses: actions/deploy-pages@v4
+      - name: Verify public HTML checksum
+        if: steps.current.outputs.ready == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 scripts/publish_pages.py
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: python3 scripts/verify_pages.py --url "$SITE_URL" --commit "$GITHUB_SHA"
       - uses: actions/setup-python@v5
-        if: steps.publish.outputs.published == 'true'
+        if: steps.current.outputs.ready == 'true'
         with:
           python-version: '3.12'
       - name: Install public-site browser test tools
-        if: steps.publish.outputs.published == 'true'
+        if: steps.current.outputs.ready == 'true'
         run: |
           python -m pip install playwright==1.57.0
           python -m playwright install --with-deps chromium
       - name: Test the published HTTPS application
-        if: steps.publish.outputs.published == 'true'
+        if: steps.current.outputs.ready == 'true'
         env:
-          SITE_URL: ${{ steps.publish.outputs.url }}
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
         run: python tests/browser_published.py --url "$SITE_URL" --commit "$GITHUB_SHA"
       - name: Upload deployment evidence
         if: always()

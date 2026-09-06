@@ -1,0 +1,9 @@
+{
+  "name": "aster-cas",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A dependency-free symbolic mathematics workbench with a cancellable CAS worker and WebGPU plotting.",
+  "scripts": { "test": "node --test tests/*.test.js", "build": "node build.mjs", "start": "python3 -m http.server 8765" },
+  "license": "MIT"
+}

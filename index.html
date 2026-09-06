@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark"><meta name="theme-color" content="#a34d3f">
+  <meta name="description" content="Aster CAS — a local-first symbolic mathematics worksheet with exact arithmetic and interactive WebGPU plots.">
+  <title>Aster CAS · Symbolic mathematics, beautifully connected</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23a34d3f'/%3E%3Cpath d='M20 5l4.2 10.8L35 20l-10.8 4.2L20 35l-4.2-10.8L5 20l10.8-4.2z' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="titlebar">
+    <a class="brand" href="#" aria-label="Aster home" data-action="examples"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="9"/><path d="M18 4.5l3.8 9.7 9.7 3.8-9.7 3.8-3.8 9.7-3.8-9.7L4.5 18l9.7-3.8z"/></svg><span>Aster<span class="brand-cas">CAS</span></span></a>
+    <span class="title-divider"></span>
+    <div class="quick-tools"><button class="icon-button" data-action="new" title="New worksheet (Ctrl/Cmd+N)" aria-label="New worksheet" data-icon="new"></button><button class="icon-button" data-action="open" title="Open worksheet" aria-label="Open worksheet" data-icon="folder"></button><button class="icon-button" data-action="save" title="Save worksheet (Ctrl/Cmd+S)" aria-label="Save worksheet" data-icon="save"></button><span class="tool-separator"></span><button class="icon-button" data-action="undo" title="Undo (Ctrl/Cmd+Z)" aria-label="Undo" data-icon="undo"></button><button class="icon-button" data-action="redo" title="Redo (Ctrl/Cmd+Shift+Z)" aria-label="Redo" data-icon="redo"></button></div>
+    <div class="window-title" id="window-title">Symbolic exploration</div>
+    <button class="command-search" data-action="commands"><span data-icon="search"></span><span>Find a command</span><kbd>⌘ K</kbd></button>
+    <button class="icon-button" data-action="theme" title="Switch light/dark theme" aria-label="Switch theme" data-icon="sun"></button>
+    <div class="user-avatar" title="Local workspace · no account required">WS</div>
+  </header>
+  <nav class="menubar" aria-label="Application menus"><button class="file-menu-button" data-action="file-menu">File</button><div id="ribbon-tabs" role="tablist"><button class="selected" role="tab" aria-selected="true" data-ribbon="home">Home</button><button role="tab" aria-selected="false" data-ribbon="insert">Insert</button><button role="tab" aria-selected="false" data-ribbon="math">Mathematics</button><button role="tab" aria-selected="false" data-ribbon="plots">Plots</button><button role="tab" aria-selected="false" data-ribbon="view">View</button></div><button class="help-menu-button" data-action="help">Help <span>↗</span></button></nav>
+  <section class="ribbon" id="ribbon" aria-label="Worksheet tools"></section>
+  <div class="contextbar"><div class="mode-toggle" aria-label="Worksheet mode"><button data-action="worksheet-mode" class="selected">Worksheet</button><button data-action="document-mode">Document</button></div><span class="context-divider"></span><select id="input-mode" aria-label="Input display mode"><option value="math">2-D Math preview</option><option value="source">Source input</option></select><span class="context-divider"></span><span class="context-hint"><span class="small-dot"></span> Exact symbolic arithmetic</span><div class="context-right"><span id="save-indicator">Saved locally</span><button class="icon-button small" data-action="left-panel" title="Toggle palettes" aria-label="Toggle palettes" data-icon="sidebar"></button><button class="icon-button small" data-action="right-panel" title="Toggle context panel" aria-label="Toggle context panel" data-icon="sidebar-right"></button></div></div>
+  <main class="app-layout">
+    <aside class="left-panel" aria-label="Math palettes"><div class="panel-title"><span>Palettes</span><button class="icon-button small" data-action="left-panel" title="Collapse palettes" aria-label="Collapse palettes">‹</button></div><div class="palette-search"><span data-icon="search"></span><input id="palette-filter" placeholder="Find a symbol or template" aria-label="Search palettes"></div><div id="palettes" class="panel-scroll"></div><div class="palette-bottom"><div class="palette-bottom-icon">✦</div><strong>A little inspiration?</strong><p>Start with an idea. Let the math follow.</p><button data-action="examples">Explore worksheets <span>↗</span></button></div></aside>
+    <section class="workspace" aria-label="Worksheet workspace"><div class="document-tabs" id="document-tabs" role="tablist" aria-label="Open worksheets"></div><div class="document-scroll" id="document-scroll"><article class="worksheet" id="worksheet"></article><button class="bottom-insert" data-action="add-code"><span>＋</span> Add an execution group <kbd>Ctrl + Enter</kbd></button><div class="sheet-end">ASTER CAS <span>·</span> Think symbolically. Explore visually.</div></div></section>
+    <aside class="right-panel" aria-label="Context panel"><div class="panel-title"><span>Context panel</span><button class="icon-button small" data-action="right-panel" title="Collapse context panel" aria-label="Collapse context panel">›</button></div><div class="inspector-tabs" role="tablist"><button class="selected" data-inspector="context">Expression</button><button data-inspector="variables">Variables</button><button data-inspector="outline">Outline</button></div><div id="inspector" class="panel-scroll"></div><div class="kernel-card"><div><span class="status-dot"></span><strong>Local math kernel</strong><span class="kernel-ready">Ready</span></div><p>Exact rationals · symbolic expressions<br>Isolated worker · no server round trips</p><button data-action="restart">Restart kernel <span>↻</span></button></div></aside>
+  </main>
+  <footer class="statusbar"><div><span class="status-dot" id="status-dot"></span><span id="kernel-status" role="status">Kernel ready</span><span class="status-separator"></span><span id="cell-count">0 groups</span><span id="timing"></span></div><div><span id="renderer-status">Initializing renderer</span><span class="status-separator"></span><span id="caret-status">Local workspace</span><button data-action="zoom-out" aria-label="Zoom out">−</button><button id="zoom-label" data-action="zoom-reset" title="Reset zoom">100%</button><button data-action="zoom-in" aria-label="Zoom in">＋</button></div></footer>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <div id="menu" class="dropdown-menu" hidden></div>
+  <dialog id="dialog"><div class="dialog-head"><div><span class="dialog-kicker">ASTER CAS</span><h2 id="dialog-title"></h2></div><button data-action="close-dialog" class="icon-button" aria-label="Close dialog">✕</button></div><div id="dialog-body"></div></dialog>
+  <input id="open-file" type="file" accept=".aster,.json,application/json" hidden>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

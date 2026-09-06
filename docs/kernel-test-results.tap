@@ -1,0 +1,598 @@
+TAP version 13
+# Subtest: 1/3+1/6
+ok 1 - 1/3+1/6
+  ---
+  duration_ms: 5.238152
+  type: 'test'
+  ...
+# Subtest: 0.1+0.2
+ok 2 - 0.1+0.2
+  ---
+  duration_ms: 0.341907
+  type: 'test'
+  ...
+# Subtest: 2^100
+ok 3 - 2^100
+  ---
+  duration_ms: 0.838254
+  type: 'test'
+  ...
+# Subtest: -2^2
+ok 4 - -2^2
+  ---
+  duration_ms: 0.372432
+  type: 'test'
+  ...
+# Subtest: (-2)^2
+ok 5 - (-2)^2
+  ---
+  duration_ms: 0.271893
+  type: 'test'
+  ...
+# Subtest: 2^3^2
+ok 6 - 2^3^2
+  ---
+  duration_ms: 0.181459
+  type: 'test'
+  ...
+# Subtest: 2x+3x
+ok 7 - 2x+3x
+  ---
+  duration_ms: 0.591988
+  type: 'test'
+  ...
+# Subtest: 2e-3+0.001
+ok 8 - 2e-3+0.001
+  ---
+  duration_ms: 0.163082
+  type: 'test'
+  ...
+# Subtest: factorial(20)
+ok 9 - factorial(20)
+  ---
+  duration_ms: 2.017284
+  type: 'test'
+  ...
+# Subtest: sqrt(81/16)
+ok 10 - sqrt(81/16)
+  ---
+  duration_ms: 0.450579
+  type: 'test'
+  ...
+# Subtest: sin(Pi)
+ok 11 - sin(Pi)
+  ---
+  duration_ms: 0.217082
+  type: 'test'
+  ...
+# Subtest: cos(Pi)
+ok 12 - cos(Pi)
+  ---
+  duration_ms: 0.085166
+  type: 'test'
+  ...
+# Subtest: simplify(sin(x)^2+cos(x)^2)
+ok 13 - simplify(sin(x)^2+cos(x)^2)
+  ---
+  duration_ms: 0.553271
+  type: 'test'
+  ...
+# Subtest: expand((x+1)^4)
+ok 14 - expand((x+1)^4)
+  ---
+  duration_ms: 0.79484
+  type: 'test'
+  ...
+# Subtest: factor(x^3-6*x^2+11*x-6)
+ok 15 - factor(x^3-6*x^2+11*x-6)
+  ---
+  duration_ms: 7.208676
+  type: 'test'
+  ...
+# Subtest: solve(x^2-5*x+6=0,x)
+ok 16 - solve(x^2-5*x+6=0,x)
+  ---
+  duration_ms: 0.918002
+  type: 'test'
+  ...
+# Subtest: solve(x^2-2*x+1=0,x)
+ok 17 - solve(x^2-2*x+1=0,x)
+  ---
+  duration_ms: 0.392412
+  type: 'test'
+  ...
+# Subtest: solve(3*x+6=0,x)
+ok 18 - solve(3*x+6=0,x)
+  ---
+  duration_ms: 0.199276
+  type: 'test'
+  ...
+# Subtest: solve(x^3-6*x^2+11*x-6=0,x)
+ok 19 - solve(x^3-6*x^2+11*x-6=0,x)
+  ---
+  duration_ms: 0.607471
+  type: 'test'
+  ...
+# Subtest: diff(x^5,x)
+ok 20 - diff(x^5,x)
+  ---
+  duration_ms: 0.248459
+  type: 'test'
+  ...
+# Subtest: diff(x^5,x,3)
+ok 21 - diff(x^5,x,3)
+  ---
+  duration_ms: 0.715782
+  type: 'test'
+  ...
+# Subtest: diff(exp(-x^2),x)
+ok 22 - diff(exp(-x^2),x)
+  ---
+  duration_ms: 0.277752
+  type: 'test'
+  ...
+# Subtest: int(x^2,x=0..1)
+ok 23 - int(x^2,x=0..1)
+  ---
+  duration_ms: 0.783462
+  type: 'test'
+  ...
+# Subtest: int(x^2,x=1..0)
+ok 24 - int(x^2,x=1..0)
+  ---
+  duration_ms: 0.255169
+  type: 'test'
+  ...
+# Subtest: int(sin(x),x=0..Pi)
+ok 25 - int(sin(x),x=0..Pi)
+  ---
+  duration_ms: 0.209661
+  type: 'test'
+  ...
+# Subtest: limit(sin(x)/x,x=0)
+ok 26 - limit(sin(x)/x,x=0)
+  ---
+  duration_ms: 0.24305
+  type: 'test'
+  ...
+# Subtest: limit((1-cos(x))/x^2,x=0)
+ok 27 - limit((1-cos(x))/x^2,x=0)
+  ---
+  duration_ms: 0.271683
+  type: 'test'
+  ...
+# Subtest: subs(x=2,x^3+3*x+1)
+ok 28 - subs(x=2,x^3+3*x+1)
+  ---
+  duration_ms: 0.125005
+  type: 'test'
+  ...
+# Subtest: subs([x=2,y=3],x*y+x)
+ok 29 - subs([x=2,y=3],x*y+x)
+  ---
+  duration_ms: 0.106357
+  type: 'test'
+  ...
+# Subtest: sum(k^2,k=1..10)
+ok 30 - sum(k^2,k=1..10)
+  ---
+  duration_ms: 1.628436
+  type: 'test'
+  ...
+# Subtest: sum(k,k=5..2)
+ok 31 - sum(k,k=5..2)
+  ---
+  duration_ms: 0.102823
+  type: 'test'
+  ...
+# Subtest: product(k,k=1..10)
+ok 32 - product(k,k=1..10)
+  ---
+  duration_ms: 0.348577
+  type: 'test'
+  ...
+# Subtest: mean([1,2,3,4,5])
+ok 33 - mean([1,2,3,4,5])
+  ---
+  duration_ms: 0.118707
+  type: 'test'
+  ...
+# Subtest: median([8,2,6,4,10])
+ok 34 - median([8,2,6,4,10])
+  ---
+  duration_ms: 0.220768
+  type: 'test'
+  ...
+# Subtest: det(Matrix([[2,1],[1,3]]))
+ok 35 - det(Matrix([[2,1],[1,3]]))
+  ---
+  duration_ms: 0.409798
+  type: 'test'
+  ...
+# Subtest: inverse(Matrix([[2,1],[1,3]]))
+ok 36 - inverse(Matrix([[2,1],[1,3]]))
+  ---
+  duration_ms: 0.365422
+  type: 'test'
+  ...
+# Subtest: rank(Matrix([[1,2],[2,4]]))
+ok 37 - rank(Matrix([[1,2],[2,4]]))
+  ---
+  duration_ms: 0.272634
+  type: 'test'
+  ...
+# Subtest: trace(Matrix([[2,1],[1,3]]))
+ok 38 - trace(Matrix([[2,1],[1,3]]))
+  ---
+  duration_ms: 0.129002
+  type: 'test'
+  ...
+# Subtest: transpose(Matrix([[1,2,3],[4,5,6]]))
+ok 39 - transpose(Matrix([[1,2,3],[4,5,6]]))
+  ---
+  duration_ms: 0.189311
+  type: 'test'
+  ...
+# Subtest: solve([2*x+y=5,x-y=1],[x,y])
+ok 40 - solve([2*x+y=5,x-y=1],[x,y])
+  ---
+  duration_ms: 0.690114
+  type: 'test'
+  ...
+# Subtest: exact decimal scientific literals and repeating rational division
+ok 41 - exact decimal scientific literals and repeating rational division
+  ---
+  duration_ms: 0.133928
+  type: 'test'
+  ...
+# Subtest: variable and user function definitions
+ok 42 - variable and user function definitions
+  ---
+  duration_ms: 2.771733
+  type: 'test'
+  ...
+# Subtest: symbolic derivative binds its variable despite session definitions
+ok 43 - symbolic derivative binds its variable despite session definitions
+  ---
+  duration_ms: 0.19543
+  type: 'test'
+  ...
+# Subtest: matrix product identity and powers
+ok 44 - matrix product identity and powers
+  ---
+  duration_ms: 1.043779
+  type: 'test'
+  ...
+# Subtest: reset removes variables and functions
+ok 45 - reset removes variables and functions
+  ---
+  duration_ms: 0.142541
+  type: 'test'
+  ...
+# Subtest: indefinite unsupported integration is honest
+ok 46 - indefinite unsupported integration is honest
+  ---
+  duration_ms: 0.29674
+  type: 'test'
+  ...
+# Subtest: numeric quadrature exp(-x²)
+ok 47 - numeric quadrature exp(-x²)
+  ---
+  duration_ms: 0.705477
+  type: 'test'
+  ...
+# Subtest: adaptive Simpson convergence and reversed interval
+ok 48 - adaptive Simpson convergence and reversed interval
+  ---
+  duration_ms: 0.175972
+  type: 'test'
+  ...
+# Subtest: bisection root scan checks the residual
+ok 49 - bisection root scan checks the residual
+  ---
+  duration_ms: 4.492046
+  type: 'test'
+  ...
+# Subtest: scalar ODE integration agrees with the exponential solution
+ok 50 - scalar ODE integration agrees with the exponential solution
+  ---
+  duration_ms: 0.418411
+  type: 'test'
+  ...
+# Subtest: ODE result is real sampled data
+ok 51 - ODE result is real sampled data
+  ---
+  duration_ms: 3.641633
+  type: 'test'
+  ...
+# Subtest: plot bytecode handles a free parameter
+ok 52 - plot bytecode handles a free parameter
+  ---
+  duration_ms: 0.281688
+  type: 'test'
+  ...
+# Subtest: surface bytecode exposes both axes and parameter
+ok 53 - surface bytecode exposes both axes and parameter
+  ---
+  duration_ms: 0.250712
+  type: 'test'
+  ...
+# Subtest: branch-sensitive sqrt(x²) is not rewritten to x
+ok 54 - branch-sensitive sqrt(x²) is not rewritten to x
+  ---
+  duration_ms: 0.117445
+  type: 'test'
+  ...
+# Subtest: parser rejects JavaScript injection and non-math property access
+ok 55 - parser rejects JavaScript injection and non-math property access
+  ---
+  duration_ms: 0.385833
+  type: 'test'
+  ...
+# Subtest: MathML escapes names
+ok 56 - MathML escapes names
+  ---
+  duration_ms: 0.093479
+  type: 'test'
+  ...
+# Subtest: guard: 1/0
+ok 57 - guard: 1/0
+  ---
+  duration_ms: 0.103624
+  type: 'test'
+  ...
+# Subtest: guard: 0^0
+ok 58 - guard: 0^0
+  ---
+  duration_ms: 0.091105
+  type: 'test'
+  ...
+# Subtest: guard: factorial(-1)
+ok 59 - guard: factorial(-1)
+  ---
+  duration_ms: 2.200135
+  type: 'test'
+  ...
+# Subtest: guard: factorial(1001)
+ok 60 - guard: factorial(1001)
+  ---
+  duration_ms: 0.147009
+  type: 'test'
+  ...
+# Subtest: guard: 2^5000
+ok 61 - guard: 2^5000
+  ---
+  duration_ms: 0.070284
+  type: 'test'
+  ...
+# Subtest: guard: 1e1001
+ok 62 - guard: 1e1001
+  ---
+  duration_ms: 0.052888
+  type: 'test'
+  ...
+# Subtest: guard: diff(x,x,99)
+ok 63 - guard: diff(x,x,99)
+  ---
+  duration_ms: 0.063515
+  type: 'test'
+  ...
+# Subtest: guard: int(1/x,x=-1..1)
+ok 64 - guard: int(1/x,x=-1..1)
+  ---
+  duration_ms: 0.151165
+  type: 'test'
+  ...
+# Subtest: guard: inverse(Matrix([[1,2],[2,4]]))
+ok 65 - guard: inverse(Matrix([[1,2],[2,4]]))
+  ---
+  duration_ms: 0.138976
+  type: 'test'
+  ...
+# Subtest: guard: Matrix([[1,2],[3]])
+ok 66 - guard: Matrix([[1,2],[3]])
+  ---
+  duration_ms: 0.078897
+  type: 'test'
+  ...
+# Subtest: guard: det(Matrix([[1,2,3]]))
+ok 67 - guard: det(Matrix([[1,2,3]]))
+  ---
+  duration_ms: 0.122632
+  type: 'test'
+  ...
+# Subtest: guard: solve([x+y=1,2*x+2*y=2],[x,y])
+ok 68 - guard: solve([x+y=1,2*x+2*y=2],[x,y])
+  ---
+  duration_ms: 0.211063
+  type: 'test'
+  ...
+# Subtest: guard: plot(sin(x),x=1..-1)
+ok 69 - guard: plot(sin(x),x=1..-1)
+  ---
+  duration_ms: 0.090655
+  type: 'test'
+  ...
+# Subtest: guard: plot3d(sin(x),x=0..1,x=0..1)
+ok 70 - guard: plot3d(sin(x),x=0..1,x=0..1)
+  ---
+  duration_ms: 0.34406
+  type: 'test'
+  ...
+# Subtest: guard: ode(y,y=1,y=0..1)
+ok 71 - guard: ode(y,y=1,y=0..1)
+  ---
+  duration_ms: 0.093078
+  type: 'test'
+  ...
+# Subtest: guard: Pi:=3
+ok 72 - guard: Pi:=3
+  ---
+  duration_ms: 0.053049
+  type: 'test'
+  ...
+# Subtest: guard: series(exp(x),x=0,50)
+ok 73 - guard: series(exp(x),x=0,50)
+  ---
+  duration_ms: 0.186798
+  type: 'test'
+  ...
+# Subtest: guard: sum(k,k=1..20000)
+ok 74 - guard: sum(k,k=1..20000)
+  ---
+  duration_ms: 0.08065
+  type: 'test'
+  ...
+# Subtest: guard: limit(1/x,x=0)
+ok 75 - guard: limit(1/x,x=0)
+  ---
+  duration_ms: 0.093679
+  type: 'test'
+  ...
+# Subtest: guard: dsolve(x,x)
+ok 76 - guard: dsolve(x,x)
+  ---
+  duration_ms: 0.06742
+  type: 'test'
+  ...
+# Subtest: derivative property: x^4+2*x^3-3*x+2
+ok 77 - derivative property: x^4+2*x^3-3*x+2
+  ---
+  duration_ms: 0.232756
+  type: 'test'
+  ...
+# Subtest: derivative property: sin(x^2)*exp(x)
+ok 78 - derivative property: sin(x^2)*exp(x)
+  ---
+  duration_ms: 0.14818
+  type: 'test'
+  ...
+# Subtest: derivative property: sqrt(x+5)
+ok 79 - derivative property: sqrt(x+5)
+  ---
+  duration_ms: 2.223079
+  type: 'test'
+  ...
+# Subtest: derivative property: log(x^2+2)
+ok 80 - derivative property: log(x^2+2)
+  ---
+  duration_ms: 0.141009
+  type: 'test'
+  ...
+# Subtest: derivative property: atan(3*x)
+ok 81 - derivative property: atan(3*x)
+  ---
+  duration_ms: 0.139417
+  type: 'test'
+  ...
+# Subtest: derivative property: sin(x)/x
+ok 82 - derivative property: sin(x)/x
+  ---
+  duration_ms: 0.112196
+  type: 'test'
+  ...
+# Subtest: antiderivative property: x^3+3*x+1
+ok 83 - antiderivative property: x^3+3*x+1
+  ---
+  duration_ms: 0.289028
+  type: 'test'
+  ...
+# Subtest: antiderivative property: sin(2*x)
+ok 84 - antiderivative property: sin(2*x)
+  ---
+  duration_ms: 0.113588
+  type: 'test'
+  ...
+# Subtest: antiderivative property: x*exp(x)
+ok 85 - antiderivative property: x*exp(x)
+  ---
+  duration_ms: 0.21574
+  type: 'test'
+  ...
+# Subtest: antiderivative property: x^2*cos(x)
+ok 86 - antiderivative property: x^2*cos(x)
+  ---
+  duration_ms: 0.41812
+  type: 'test'
+  ...
+# Subtest: antiderivative property: 1/x
+ok 87 - antiderivative property: 1/x
+  ---
+  duration_ms: 0.108552
+  type: 'test'
+  ...
+# Subtest: polynomial expansion property over deterministic sample points
+ok 88 - polynomial expansion property over deterministic sample points
+  ---
+  duration_ms: 4.761054
+  type: 'test'
+  ...
+# Subtest: imaginary-unit integer powers are exact
+ok 89 - imaginary-unit integer powers are exact
+  ---
+  duration_ms: 0.18198
+  type: 'test'
+  ...
+# Subtest: non-smooth two-sided limit is not falsely accepted
+ok 90 - non-smooth two-sided limit is not falsely accepted
+  ---
+  duration_ms: 0.145005
+  type: 'test'
+  ...
+# Subtest: log singularity is not returned as a finite limit
+ok 91 - log singularity is not returned as a finite limit
+  ---
+  duration_ms: 0.212876
+  type: 'test'
+  ...
+# Subtest: an off-grid interior pole is rejected
+ok 92 - an off-grid interior pole is rejected
+  ---
+  duration_ms: 0.180538
+  type: 'test'
+  ...
+# Subtest: a double pole is rejected even without a sign change
+ok 93 - a double pole is rejected even without a sign change
+  ---
+  duration_ms: 0.166507
+  type: 'test'
+  ...
+# Subtest: quadratic denominator certification accepts positive quadratics
+ok 94 - quadratic denominator certification accepts positive quadratics
+  ---
+  duration_ms: 1.025942
+  type: 'test'
+  ...
+# Subtest: trigonometric poles are rejected
+ok 95 - trigonometric poles are rejected
+  ---
+  duration_ms: 0.164634
+  type: 'test'
+  ...
+# Subtest: direct matrix products retain their noncommutative order
+ok 96 - direct matrix products retain their noncommutative order
+  ---
+  duration_ms: 0.290551
+  type: 'test'
+  ...
+# Subtest: matrix arguments retain their order through user-defined functions
+ok 97 - matrix arguments retain their order through user-defined functions
+  ---
+  duration_ms: 0.455536
+  type: 'test'
+  ...
+# Subtest: nested function calls preserve matrix multiplication order
+ok 98 - nested function calls preserve matrix multiplication order
+  ---
+  duration_ms: 0.37064
+  type: 'test'
+  ...
+1..98
+# tests 98
+# suites 0
+# pass 98
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 144.29347
